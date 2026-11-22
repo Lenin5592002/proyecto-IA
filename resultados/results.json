@@ -1,0 +1,396 @@
+{
+  "consultas": {
+    "Q1": {
+      "tipo": "Predictiva (evidencia incompleta)",
+      "evidencia": {
+        "Clima": "Lluvia",
+        "Vehiculo": "Falla"
+      },
+      "objetivo": "Retraso",
+      "P_evidencia": 0.037500000000000006,
+      "marginales_propia": {
+        "Preparacion": [
+          0.7,
+          0.3
+        ],
+        "Trafico": [
+          0.09999999999999998,
+          0.29999999999999993,
+          0.6
+        ],
+        "Retraso": [
+          0.6304000000000001,
+          0.3696
+        ]
+      },
+      "marginales_pgmpy": {
+        "Preparacion": [
+          0.7,
+          0.3
+        ],
+        "Trafico": [
+          0.1,
+          0.3,
+          0.6
+        ],
+        "Retraso": [
+          0.6304,
+          0.3696
+        ]
+      },
+      "prior": {
+        "Preparacion": [
+          0.7,
+          0.3
+        ],
+        "Trafico": [
+          0.44125,
+          0.3516250000000001,
+          0.207125
+        ],
+        "Retraso": [
+          0.764008125,
+          0.235991875
+        ]
+      },
+      "dif_max": {
+        "Preparacion": 0.0,
+        "Trafico": 5.551115123125783e-17,
+        "Retraso": 1.1102230246251565e-16
+      }
+    },
+    "Q2": {
+      "tipo": "Predictiva (vías favorables, preparación demorada)",
+      "evidencia": {
+        "Clima": "Despejado",
+        "Vehiculo": "Buen_Estado",
+        "Preparacion": "Demorada"
+      },
+      "objetivo": "Retraso",
+      "P_evidencia": 0.19124999999999995,
+      "marginales_propia": {
+        "Trafico": [
+          0.55,
+          0.33,
+          0.12000000000000001
+        ],
+        "Retraso": [
+          0.58,
+          0.42
+        ]
+      },
+      "marginales_pgmpy": {
+        "Trafico": [
+          0.55,
+          0.33,
+          0.12
+        ],
+        "Retraso": [
+          0.5800000000000001,
+          0.42000000000000004
+        ]
+      },
+      "prior": {
+        "Trafico": [
+          0.44125,
+          0.3516250000000001,
+          0.207125
+        ],
+        "Retraso": [
+          0.764008125,
+          0.235991875
+        ]
+      },
+      "dif_max": {
+        "Trafico": 1.3877787807814457e-17,
+        "Retraso": 1.1102230246251565e-16
+      }
+    },
+    "Q3": {
+      "tipo": "Diagnóstica (solo se observa el resultado)",
+      "evidencia": {
+        "Retraso": "Si"
+      },
+      "objetivo": "Vehiculo",
+      "P_evidencia": 0.23599187499999996,
+      "marginales_propia": {
+        "Clima": [
+          0.6763103602613437,
+          0.3236896397386563
+        ],
+        "Preparacion": [
+          0.4107450733208506,
+          0.5892549266791495
+        ],
+        "Vehiculo": [
+          0.8095538246814641,
+          0.19044617531853586
+        ],
+        "Trafico": [
+          0.20754422159661218,
+          0.37994687317095127,
+          0.4125089052324365
+        ]
+      },
+      "marginales_pgmpy": {
+        "Clima": [
+          0.6763103602613437,
+          0.3236896397386563
+        ],
+        "Preparacion": [
+          0.4107450733208505,
+          0.5892549266791495
+        ],
+        "Vehiculo": [
+          0.8095538246814641,
+          0.19044617531853583
+        ],
+        "Trafico": [
+          0.20754422159661218,
+          0.3799468731709514,
+          0.41250890523243644
+        ]
+      },
+      "prior": {
+        "Clima": [
+          0.7499999999999999,
+          0.25000000000000006
+        ],
+        "Preparacion": [
+          0.7,
+          0.3
+        ],
+        "Vehiculo": [
+          0.85,
+          0.15000000000000005
+        ],
+        "Trafico": [
+          0.44125,
+          0.3516250000000001,
+          0.207125
+        ]
+      },
+      "dif_max": {
+        "Clima": 0.0,
+        "Preparacion": 1.1102230246251565e-16,
+        "Vehiculo": 2.7755575615628914e-17,
+        "Trafico": 1.1102230246251565e-16
+      }
+    },
+    "Q4": {
+      "tipo": "Diagnóstica (retraso con preparación óptima)",
+      "evidencia": {
+        "Retraso": "Si",
+        "Preparacion": "Optima"
+      },
+      "objetivo": "Vehiculo",
+      "P_evidencia": 0.09693249999999998,
+      "marginales_propia": {
+        "Clima": [
+          0.6385629174941325,
+          0.36143708250586754
+        ],
+        "Vehiculo": [
+          0.7887705361978696,
+          0.2112294638021304
+        ],
+        "Trafico": [
+          0.09559487272070771,
+          0.38089005235602097,
+          0.5235150749232713
+        ]
+      },
+      "marginales_pgmpy": {
+        "Clima": [
+          0.6385629174941325,
+          0.3614370825058675
+        ],
+        "Vehiculo": [
+          0.7887705361978696,
+          0.2112294638021303
+        ],
+        "Trafico": [
+          0.09559487272070773,
+          0.38089005235602097,
+          0.5235150749232713
+        ]
+      },
+      "prior": {
+        "Clima": [
+          0.7499999999999999,
+          0.25000000000000006
+        ],
+        "Vehiculo": [
+          0.85,
+          0.15000000000000005
+        ],
+        "Trafico": [
+          0.44125,
+          0.3516250000000001,
+          0.207125
+        ]
+      },
+      "dif_max": {
+        "Clima": 5.551115123125783e-17,
+        "Vehiculo": 8.326672684688674e-17,
+        "Trafico": 1.3877787807814457e-17
+      }
+    }
+  },
+  "max_dif_global": 1.1102230246251565e-16,
+  "Q2_contraste_optima": [
+    0.892,
+    0.10799999999999998
+  ],
+  "Q4_conjunta_Clima_Vehiculo": {
+    "Despejado|Buen_Estado": 0.49720166094962986,
+    "Despejado|Falla": 0.14136125654450263,
+    "Lluvia|Buen_Estado": 0.29156887524823977,
+    "Lluvia|Falla": 0.06986820725762774
+  },
+  "Q4_conjunta_dif": 5.551115123125783e-17,
+  "P_retraso_prior": [
+    0.764008125,
+    0.235991875
+  ],
+  "manual": {
+    "q": {
+      "Bajo": 0.11099999999999999,
+      "Moderado": 0.255,
+      "Alto": 0.47
+    },
+    "s": {
+      "Despejado|Buen_Estado": 0.2016,
+      "Despejado|Falla": 0.2763,
+      "Lluvia|Buen_Estado": 0.29425,
+      "Lluvia|Falla": 0.3696
+    },
+    "h": {
+      "Buen_Estado": 0.2247625,
+      "Falla": 0.299625
+    },
+    "conjunta": {
+      "Buen_Estado": 0.19104812499999999,
+      "Falla": 0.04494375
+    },
+    "Z": 0.235991875,
+    "posterior": {
+      "Buen_Estado": 0.8095538246814641,
+      "Falla": 0.19044617531853586
+    },
+    "dif_vs_codigo": 0.0
+  },
+  "sensibilidad": {
+    "S1": [
+      {
+        "a": 0.05,
+        "fila": [
+          0.59375,
+          0.35625,
+          0.05
+        ],
+        "P_retraso_dado_escenario": 0.18025000000000002,
+        "P_retraso": 0.22238125,
+        "P_alto_dado_retraso": 0.3434417245158934
+      },
+      {
+        "a": 0.12,
+        "fila": [
+          0.55,
+          0.33,
+          0.12
+        ],
+        "P_retraso_dado_escenario": 0.2016,
+        "P_retraso": 0.235991875,
+        "P_alto_dado_retraso": 0.4125089052324365
+      },
+      {
+        "a": 0.25,
+        "fila": [
+          0.46875000000000006,
+          0.28125,
+          0.25
+        ],
+        "P_retraso_dado_escenario": 0.24124999999999996,
+        "P_retraso": 0.26126875000000005,
+        "P_alto_dado_retraso": 0.5216850465277612
+      },
+      {
+        "a": 0.4,
+        "fila": [
+          0.375,
+          0.225,
+          0.4
+        ],
+        "P_retraso_dado_escenario": 0.287,
+        "P_retraso": 0.2904343750000001,
+        "P_alto_dado_retraso": 0.6240437276062794
+      },
+      {
+        "a": 0.55,
+        "fila": [
+          0.28125,
+          0.16874999999999998,
+          0.55
+        ],
+        "P_retraso_dado_escenario": 0.33275000000000005,
+        "P_retraso": 0.31960000000000005,
+        "P_alto_dado_retraso": 0.707720588235294
+      },
+      {
+        "a": 0.7,
+        "fila": [
+          0.18750000000000003,
+          0.11250000000000002,
+          0.7
+        ],
+        "P_retraso_dado_escenario": 0.37849999999999995,
+        "P_retraso": 0.348765625,
+        "P_alto_dado_retraso": 0.7774024461269656
+      },
+      {
+        "a": 0.85,
+        "fila": [
+          0.09375000000000001,
+          0.05625000000000001,
+          0.85
+        ],
+        "P_retraso_dado_escenario": 0.42424999999999996,
+        "P_retraso": 0.3779312500000001,
+        "P_alto_dado_retraso": 0.836329358845028
+      }
+    ],
+    "S2": [
+      {
+        "theta": 0.0,
+        "P_retraso": 0.138475,
+        "P_dem_dado_retraso": 0.0
+      },
+      {
+        "theta": 0.1,
+        "P_retraso": 0.170980625,
+        "P_dem_dado_retraso": 0.2711016233564476
+      },
+      {
+        "theta": 0.3,
+        "P_retraso": 0.235991875,
+        "P_dem_dado_retraso": 0.5892549266791495
+      },
+      {
+        "theta": 0.5,
+        "P_retraso": 0.30100312500000004,
+        "P_dem_dado_retraso": 0.7699774711641283
+      },
+      {
+        "theta": 0.7,
+        "P_retraso": 0.36601437499999995,
+        "P_dem_dado_retraso": 0.8865003594462649
+      },
+      {
+        "theta": 0.9,
+        "P_retraso": 0.43102562500000013,
+        "P_dem_dado_retraso": 0.9678731397930227
+      }
+    ]
+  }
+}

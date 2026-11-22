@@ -1,0 +1,36 @@
+{
+  "orden": ["Clima", "Preparacion", "Vehiculo", "Trafico", "Retraso"],
+  "estados": {
+    "Clima": ["Despejado", "Lluvia"],
+    "Preparacion": ["Optima", "Demorada"],
+    "Vehiculo": ["Buen_Estado", "Falla"],
+    "Trafico": ["Bajo", "Moderado", "Alto"],
+    "Retraso": ["No", "Si"]
+  },
+  "padres": {
+    "Clima": [],
+    "Preparacion": [],
+    "Vehiculo": [],
+    "Trafico": ["Clima", "Vehiculo"],
+    "Retraso": ["Trafico", "Preparacion"]
+  },
+  "cpt": {
+    "Clima": { "": [0.75, 0.25] },
+    "Preparacion": { "": [0.70, 0.30] },
+    "Vehiculo": { "": [0.85, 0.15] },
+    "Trafico": {
+      "Despejado|Buen_Estado": [0.55, 0.33, 0.12],
+      "Despejado|Falla": [0.30, 0.40, 0.30],
+      "Lluvia|Buen_Estado": [0.25, 0.40, 0.35],
+      "Lluvia|Falla": [0.10, 0.30, 0.60]
+    },
+    "Retraso": {
+      "Bajo|Optima": [0.97, 0.03],
+      "Bajo|Demorada": [0.70, 0.30],
+      "Moderado|Optima": [0.85, 0.15],
+      "Moderado|Demorada": [0.50, 0.50],
+      "Alto|Optima": [0.65, 0.35],
+      "Alto|Demorada": [0.25, 0.75]
+    }
+  }
+}

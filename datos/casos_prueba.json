@@ -1,0 +1,22 @@
+{
+  "Q1": {
+    "tipo": "Predictiva (evidencia incompleta)",
+    "evidencia": {"Clima": "Lluvia", "Vehiculo": "Falla"},
+    "objetivo": "Retraso"
+  },
+  "Q2": {
+    "tipo": "Predictiva (vías favorables, preparación demorada)",
+    "evidencia": {"Clima": "Despejado", "Vehiculo": "Buen_Estado", "Preparacion": "Demorada"},
+    "objetivo": "Retraso"
+  },
+  "Q3": {
+    "tipo": "Diagnóstica (solo se observa el resultado)",
+    "evidencia": {"Retraso": "Si"},
+    "objetivo": "Vehiculo"
+  },
+  "Q4": {
+    "tipo": "Diagnóstica (retraso con preparación óptima)",
+    "evidencia": {"Retraso": "Si", "Preparacion": "Optima"},
+    "objetivo": "Vehiculo"
+  }
+}
