@@ -2,7 +2,7 @@ import itertools
 import json
 import os
 import pandas as pd
-import streamlit as st
+import streamlit as st  # type: ignore[import-not-found]
 from pgmpy.inference import VariableElimination
 
 from src.red_bayesiana import RedBayesiana
@@ -280,7 +280,7 @@ with tab4:
 
     st.image("resultados/fig_diagnosticas.png", caption="Consultas Diagnósticas (Q3 y Q4)", use_container_width=True)
 
-    with st.expander("Ver desarrollo paso a paso de la consulta manual Q3: P(Vehiculo | Retraso=Si)"):
+    with st.expander("Ver desarrollo paso a paso de la consulta manual Q3: P(Trafico | Retraso=Si)"):
         st.json(resultados["manual"])
 
 # ==============================================================================

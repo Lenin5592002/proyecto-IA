@@ -48,10 +48,6 @@ def ejecutar_experimentos():
         }
     RESULT["max_dif_global"] = max_dif_global
 
-    RESULT["Q2_contraste_optima"] = red.marginal(
-        "Retraso", {"Clima": "Despejado", "Vehiculo": "Buen_Estado", "Preparacion": "Optima"}
-    )
-
     ev4 = CONSULTAS["Q4"]["evidencia"]
     conj, _ = red.consulta(["Clima", "Vehiculo"], ev4)
     RESULT["Q4_conjunta_Clima_Vehiculo"] = {f"{k[0]}|{k[1]}": v for k, v in conj.items()}
@@ -61,41 +57,40 @@ def ejecutar_experimentos():
     )
     RESULT["P_retraso_prior"] = red.marginal("Retraso")
 
-    # B. Consulta manual (Q3): P(Vehiculo | Retraso=Si)
+    # B. Consulta manual (Q3): P(Trafico | Retraso=Si)
     P, E = red.cpt, red.estados
-    q_m = {
+    # Paso 1: P(T) = sum_{C,V} P(C) P(V) P(T | C, V)
+    pt = {
+        t: sum(P["Clima"][()][ic] * P["Vehiculo"][()][iv] * P["Trafico"][(c, v)][it]
+               for ic, c in enumerate(E["Clima"]) for iv, v in enumerate(E["Vehiculo"]))
+        for it, t in enumerate(E["Trafico"])
+    }
+    # Paso 2: P(Retraso=Si | T) = sum_P P(P) P(Si | T, P)
+    rt = {
         t: sum(P["Preparacion"][()][ip] * P["Retraso"][(t, pr)][1] for ip, pr in enumerate(E["Preparacion"]))
         for t in E["Trafico"]
     }
-    s_m = {
-        (c, v): sum(P["Trafico"][(c, v)][it] * q_m[t] for it, t in enumerate(E["Trafico"]))
-        for c in E["Clima"] for v in E["Vehiculo"]
-    }
-    h_m = {
-        v: sum(P["Clima"][()][ic] * s_m[(c, v)] for ic, c in enumerate(E["Clima"]))
-        for v in E["Vehiculo"]
-    }
-    conj_manual = {v: P["Vehiculo"][()][iv] * h_m[v] for iv, v in enumerate(E["Vehiculo"])}
+    # Paso 3: conjunta con la evidencia y normalización
+    conj_manual = {t: pt[t] * rt[t] for t in E["Trafico"]}
     z_manual = sum(conj_manual.values())
     RESULT["manual"] = {
-        "q": q_m,
-        "s": {f"{c}|{v}": x for (c, v), x in s_m.items()},
-        "h": h_m,
+        "P_trafico": pt,
+        "P_retraso_dado_T": rt,
         "conjunta": conj_manual,
         "Z": z_manual,
-        "posterior": {v: conj_manual[v] / z_manual for v in conj_manual},
+        "posterior": {t: conj_manual[t] / z_manual for t in conj_manual},
     }
-    post_q3, _ = red.consulta("Vehiculo", {"Retraso": "Si"})
+    post_q3, _ = red.consulta("Trafico", {"Retraso": "Si"})
     RESULT["manual"]["dif_vs_codigo"] = max(
         abs(RESULT["manual"]["posterior"][k[0]] - v) for k, v in post_q3.items()
     )
 
     # C. Análisis de sensibilidad
     sens = {}
-    FILA_S1 = ("Despejado", "Buen_Estado")
-    EV_S1 = {"Clima": "Despejado", "Vehiculo": "Buen_Estado"}
+    FILA_S1 = ("Lluvia", "Falla")
+    EV_S1 = {"Clima": "Lluvia", "Vehiculo": "Falla"}
     s1 = []
-    for a in [0.05, 0.12, 0.25, 0.40, 0.55, 0.70, 0.85]:
+    for a in [0.10, 0.25, 0.40, 0.60, 0.75, 0.90, 0.95]:
         r2 = red.con_parametro("Trafico", FILA_S1, 2, a)
         s1.append({
             "a": a,
@@ -107,7 +102,7 @@ def ejecutar_experimentos():
     sens["S1"] = s1
 
     s2 = []
-    for t in [0.0, 0.10, 0.30, 0.50, 0.70, 0.90]:
+    for t in [0.0, 0.10, 0.20, 0.30, 0.40, 0.50]:
         r2 = red.con_parametro("Preparacion", (), 1, t)
         s2.append({
             "theta": t,
@@ -145,13 +140,11 @@ def ejecutar_experimentos():
 
     # Fig 2: Predictivas
     fig, ax = plt.subplots(figsize=(7.4, 3.9))
-    etq = ["A priori", "Q1: lluvia y\nvehículo con falla", "Q2: vías favorables,\nprep. demorada",
-           "Contraste: vías favorables,\nprep. óptima"]
+    etq = ["A priori", "Q1: lluvia y\nfalla del vehículo", "Q2: condiciones\nfavorables"]
     vals = [RESULT["P_retraso_prior"][1],
             RESULT["consultas"]["Q1"]["marginales_propia"]["Retraso"][1],
-            RESULT["consultas"]["Q2"]["marginales_propia"]["Retraso"][1],
-            RESULT["Q2_contraste_optima"][1]]
-    bars = ax.bar(etq, vals, color=[GRIS, NARANJA, NARANJA, AZUL], width=0.55)
+            RESULT["consultas"]["Q2"]["marginales_propia"]["Retraso"][1]]
+    bars = ax.bar(etq, vals, color=[GRIS, NARANJA, AZUL], width=0.55)
     for b, v in zip(bars, vals):
         ax.text(b.get_x() + b.get_width() / 2, v + 0.015, f"{v:.3f}", ha="center")
     ax.set_ylim(0, 1); ax.set_ylabel("P(Retraso = Si)"); ax.tick_params(axis="x", labelsize=8)
@@ -184,8 +177,8 @@ def ejecutar_experimentos():
     a_vals = [d["a"] for d in s1]
     axes[0].plot(a_vals, [d["P_retraso"] for d in s1], "-o", color=NARANJA, label="P(Retraso=Si)")
     axes[0].plot(a_vals, [d["P_alto_dado_retraso"] for d in s1], "-s", color=AZUL, label="P(Trafico=Alto | Retraso=Si)")
-    axes[0].axvline(0.12, color=GRIS, ls="--", lw=1); axes[0].text(0.13, 0.03, "valor base", color=GRIS, fontsize=8)
-    axes[0].set_xlabel("P(Trafico=Alto | Despejado, Buen_Estado)"); axes[0].set_ylim(0, 1)
+    axes[0].axvline(0.60, color=GRIS, ls="--", lw=1); axes[0].text(0.61, 0.03, "valor base", color=GRIS, fontsize=8)
+    axes[0].set_xlabel("P(Trafico=Alto | Clima=Lluvia, Vehiculo=Falla)"); axes[0].set_ylim(0, 1)
     axes[0].legend(fontsize=7.5, loc="upper left"); axes[0].set_title("S1: parámetro del nodo de tres estados")
 
     t_vals = [d["theta"] for d in s2]

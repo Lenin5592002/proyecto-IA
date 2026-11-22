@@ -5,18 +5,18 @@
     "objetivo": "Retraso"
   },
   "Q2": {
-    "tipo": "Predictiva (vías favorables, preparación demorada)",
-    "evidencia": {"Clima": "Despejado", "Vehiculo": "Buen_Estado", "Preparacion": "Demorada"},
+    "tipo": "Predictiva (condiciones favorables)",
+    "evidencia": {"Clima": "Despejado", "Vehiculo": "Buen_Estado", "Preparacion": "Optima"},
     "objetivo": "Retraso"
   },
   "Q3": {
     "tipo": "Diagnóstica (solo se observa el resultado)",
     "evidencia": {"Retraso": "Si"},
-    "objetivo": "Vehiculo"
+    "objetivo": "Trafico"
   },
   "Q4": {
     "tipo": "Diagnóstica (retraso con preparación óptima)",
     "evidencia": {"Retraso": "Si", "Preparacion": "Optima"},
-    "objetivo": "Vehiculo"
+    "objetivo": "Trafico"
   }
 }
